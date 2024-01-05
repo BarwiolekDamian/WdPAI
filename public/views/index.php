@@ -12,7 +12,7 @@
 <body>
 
     <header>
-        <img src="/public/images/my_logo.png" alt="logo">
+        <img src="/public/images/logo.png" alt="logo">
         <nav>
             <ul>
                 <li><a href="offers">Offers</a></li>
@@ -25,7 +25,7 @@
 
     <div class="main-content">
         <div class="icon-holder">
-            <img src="/public/images/my_logo.png" alt="Icon" class="main-icon">
+            <img src="/public/images/logo.png" alt="Icon" class="main-icon">
         </div>
 
         <h1>Welcome to DialectDo – Your Gateway to Language Mastery</h1>

@@ -10,11 +10,6 @@ class DefaultController extends AppController
         $this->render('index');
     }
 
-    public function offers()
-    {
-        $this->render('offers');
-    }
-
     public function login()
     {
         $this->render('login');
