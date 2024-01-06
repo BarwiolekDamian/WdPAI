@@ -1,0 +1,47 @@
+body {
+  height: auto;
+  background-image: url("/public/images/background.jpg");
+  font-family: sans-serif;
+  margin-top: 80px;
+  padding: 30px;
+}
+
+.container {
+  width: 80%;
+  margin: 2rem auto;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group textarea {
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.custom-btn {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.custom-btn:hover {
+  background-color: #0056b3;
+}

@@ -15,6 +15,38 @@ class OfferController extends AppController
         $this->offerRepository = new OfferRepository();
     }
 
+    public function addOffer()
+    {
+        if ($this->isPost())
+        {
+            // TODO: Create New Object & Save In DB
+            $offer = new Offer
+            (
+                $_POST['language'],
+                $_POST['native_language'],
+                $_POST['description'],
+                $_POST['price'],
+                $_POST['min_level'],
+                $_POST['like'],
+                $_POST['dislike'],
+                $_POST['experience']
+            );
+
+            $this->offerRepository->addOffer($offer);
+
+            return $this->render
+            (
+                'offers',
+                [
+                    'messages' => $this->message,
+                    'offers' => $this->offerRepository->getOffers()
+                ]
+            );
+        }
+
+        return $this->render('add-offer', ['messages' => $this->message]);
+    }
+
     public function offers()
     {
         $offers = $this->offerRepository->getOffers();

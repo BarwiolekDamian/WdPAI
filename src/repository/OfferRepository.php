@@ -35,6 +35,29 @@ class OfferRepository extends Repository
         );
     }
 
+    public function addOffer(Offer $offer): void
+    {
+        $stmt = $this->database->connect()->prepare
+        ('
+            INSERT INTO offers ( language, native_language, description, price, min_level, experience, id_assigned_by )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ');
+
+        //TODO: Get Value From Logged User Session
+        $assignedById = 4;
+
+        $stmt->execute
+        ([
+            $offer->getLanguage(),
+            $offer->getNativeLanguage(),
+            $offer->getDescription(),
+            $offer->getPrice(),
+            $offer->getMinLevel(),
+            $offer->getExperience(),
+            $assignedById
+        ]);
+    }
+
     public function getOffers(): array
     {
         $stmt = $this->database->connect()->prepare
