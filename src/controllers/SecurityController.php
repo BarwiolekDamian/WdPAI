@@ -6,6 +6,13 @@ require_once __DIR__.'/../repository/UserRepository.php';
 
 class SecurityController extends AppController
 {
+    private $userRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->userRepository = new UserRepository();
+    }
 
     public function login()
     {
@@ -15,10 +22,9 @@ class SecurityController extends AppController
         }
 
         $email = $_POST['email'];
-        $password = $_POST['password'];
+        $password = md5($_POST['password']);
 
-        $userRepository = new UserRepository();
-        $user = $userRepository->getUser($email);
+        $user = $this->userRepository->getUser($email);
 
         if (!$user)
         {
@@ -45,6 +51,26 @@ class SecurityController extends AppController
         {
             return $this->render('register');
         }
+
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $confirmedPassword = $_POST['confirmedPassword'];
+        $name = $_POST['name'];
+        $surname = $_POST['surname'];
+        $phone = $_POST['phone'];
+
+        if ($password !== $confirmedPassword)
+        {
+            return $this->render('register', ['messages' => ['Passwords Are Not The Same!']]);
+        }
+
+        //TODO: Change Hash Method
+        $user = new User($email, md5($password), $name, $surname);
+        $user->setPhone($phone);
+
+        $this->userRepository->addUser($user);
+
+        return $this->render('login', ['messages' => ['You\'ve Been Succesfully Registrated!']]);
     }
 }
 

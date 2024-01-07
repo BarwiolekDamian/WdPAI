@@ -7,21 +7,20 @@ class User
     private $name;
     private $surname;
     private $phone;
+    private $balance;
 
     public function __construct
     (
         string $email,
         string $password,
         string $name,
-        string $surname,
-        string $phone
+        string $surname
     )
     {
         $this->email = $email;
         $this->password = $password;
         $this->name = $name;
         $this->surname = $surname;
-        $this->phone = $phone;
     }
 
     public function getEmail(): string
@@ -72,6 +71,16 @@ class User
     public function setPhone(string $phone)
     {
         $this->phone = $phone;
+    }
+
+    public function getBalance(): int
+    {
+        return $this->balance;
+    }
+
+    public function setBalance(int $balance)
+    {
+        $this->balance = $balance;
     }
 }
 
