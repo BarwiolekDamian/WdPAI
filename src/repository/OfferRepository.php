@@ -24,8 +24,8 @@ class OfferRepository extends Repository
 
         return new Offer
         (
-            $offer['language'],
             $offer['native_language'],
+            $offer['language'],
             $offer['description'],
             $offer['price'],
             $offer['min_level'],
@@ -39,7 +39,7 @@ class OfferRepository extends Repository
     {
         $stmt = $this->database->connect()->prepare
         ('
-            INSERT INTO offers ( language, native_language, description, price, min_level, experience, id_assigned_by )
+            INSERT INTO offers ( native_language, language, description, price, min_level, experience, id_assigned_by )
             VALUES (?, ?, ?, ?, ?, ?, ?)
         ');
 
@@ -48,8 +48,8 @@ class OfferRepository extends Repository
 
         $stmt->execute
         ([
-            $offer->getLanguage(),
             $offer->getNativeLanguage(),
+            $offer->getLanguage(),
             $offer->getDescription(),
             $offer->getPrice(),
             $offer->getMinLevel(),
@@ -86,6 +86,21 @@ class OfferRepository extends Repository
         }
 
         return $result;
+    }
+
+    public function getOffersByLanguage(string $searchString)
+    {
+        $searchString = '%'.strtolower($searchString).'%';
+
+        $stmt = $this->database->connect()->prepare
+        ('
+            SELECT * FROM offers WHERE LOWER(language) LIKE :search
+        ');
+        
+        $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
 

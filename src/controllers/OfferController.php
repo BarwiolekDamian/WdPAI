@@ -22,8 +22,8 @@ class OfferController extends AppController
             // TODO: Create New Object & Save In DB
             $offer = new Offer
             (
-                $_POST['language'],
                 $_POST['native_language'],
+                $_POST['language'],
                 $_POST['description'],
                 $_POST['price'],
                 $_POST['min_level'],
@@ -51,6 +51,22 @@ class OfferController extends AppController
     {
         $offers = $this->offerRepository->getOffers();
         $this->render('offers', ['offers' => $offers]);
+    }
+
+    public function search()
+    {
+        $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
+
+        if ($contentType === "application/json")
+        {
+            $content = trim(file_get_contents("php://input"));
+            $decoded = json_decode($content, true);
+
+            header('Content-type: application/json');
+            http_response_code(200);
+
+            echo json_encode($this->offerRepository->getOffersByLanguage($decoded['search']));
+        }
     }
 }
 

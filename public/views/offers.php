@@ -7,6 +7,7 @@
     <title>Offers</title>
     <link rel="stylesheet" href="/public/css/offers.css">
     <link rel="stylesheet" href="/public/css/nav-bar.css">
+    <script type="text/javascript" src="/public/js/search.js" defer></script>
 </head>
 
 <body>
