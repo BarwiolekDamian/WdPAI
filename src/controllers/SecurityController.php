@@ -71,6 +71,17 @@ class SecurityController extends AppController
 
         return $this->render('login', ['messages' => ['You\'ve Been Succesfully Registrated!']]);
     }
+
+    public function logout()
+    {
+        session_start();
+        $_SESSION = array();
+        session_destroy();
+        
+        $url = "http://$_SERVER[HTTP_HOST]";
+        header("Location: {$url}");
+        exit();
+    }
 }
 
 ?>

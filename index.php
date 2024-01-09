@@ -7,6 +7,8 @@ $path = parse_url($path, PHP_URL_PATH);
 
 Router::get('', 'DefaultController');
 Router::get('offers', 'OfferController');
+Router::get('logout', 'SecurityController');
+
 Router::post('search', 'OfferController');
 Router::post('addOffer', 'OfferController');
 Router::post('login', 'SecurityController');
