@@ -16,33 +16,32 @@ class SecurityController extends AppController
 
     public function login()
     {
+        session_start();
+
         if (!$this->isPost())
         {
             return $this->render('login');
         }
 
         $email = $_POST['email'];
-        $password = md5($_POST['password']);
+        $password = $_POST['password'];
 
         $user = $this->userRepository->getUser($email);
 
-        if (!$user)
+        if (!$user || $user->getEmail() !== $email)
         {
             return $this->render('login', ['messages' => ['Unknown User!']]);
         }
 
-        if ($user->getEmail() !== $email)
-        {
-            return $this->render('login', ['messages' => ['Unknown Email Address!']]);
-        }
-
-        if ($user->getPassword() !== $password)
+        if (!password_verify($password, $user->getPassword()))
         {
             return $this->render('login', ['messages' => ['Incorrect Password!']]);
         }
 
+        $_SESSION['user_email'] = $user->getEmail();
         $url = "http://$_SERVER[HTTP_HOST]";
         header("Location: {$url}/offers");
+        exit();
     }
 
     public function register()
@@ -64,8 +63,8 @@ class SecurityController extends AppController
             return $this->render('register', ['messages' => ['Passwords Are Not The Same!']]);
         }
 
-        //TODO: Change Hash Method
-        $user = new User($email, md5($password), $name, $surname);
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $user = new User($email, $hashedPassword, $name, $surname);
         $user->setPhone($phone);
 
         $this->userRepository->addUser($user);

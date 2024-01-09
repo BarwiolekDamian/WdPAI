@@ -17,9 +17,16 @@ class OfferController extends AppController
 
     public function addOffer()
     {
+        session_start();
+
+        if (!isset($_SESSION['user_email']))
+        {
+            header('Location: login');
+            exit();
+        }
+
         if ($this->isPost())
         {
-            // TODO: Create New Object & Save In DB
             $offer = new Offer
             (
                 $_POST['native_language'],
@@ -49,12 +56,28 @@ class OfferController extends AppController
 
     public function offers()
     {
+        session_start();
+
+        if (!isset($_SESSION['user_email']))
+        {
+            header('Location: login');
+            exit();
+        }
+
         $offers = $this->offerRepository->getOffers();
         $this->render('offers', ['offers' => $offers]);
     }
 
     public function search()
     {
+        session_start();
+
+        if (!isset($_SESSION['user_email']))
+        {
+            header('Location: login');
+            exit();
+        }
+        
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
         if ($contentType === "application/json")
