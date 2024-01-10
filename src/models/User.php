@@ -8,19 +8,22 @@ class User
     private $surname;
     private $phone;
     private $balance;
+    private $lecturer;
 
     public function __construct
     (
         string $email,
         string $password,
         string $name,
-        string $surname
+        string $surname,
+        bool $lecturer = false
     )
     {
         $this->email = $email;
         $this->password = $password;
         $this->name = $name;
         $this->surname = $surname;
+        $this->lecturer = $lecturer;
     }
 
     public function getEmail(): string
@@ -81,6 +84,16 @@ class User
     public function setBalance(int $balance)
     {
         $this->balance = $balance;
+    }
+
+    public function isLecturer(): bool
+    {
+        return $this->lecturer;
+    }
+
+    public function setLecturer(bool $lecturer)
+    {
+        $this->lecturer = $lecturer;
     }
 }
 

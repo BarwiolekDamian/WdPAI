@@ -1,17 +1,21 @@
 <?php
 
 require_once 'AppController.php';
+require_once __DIR__.'/../models/User.php';
 require_once __DIR__ . '/../models/Offer.php';
+require_once __DIR__.'/../repository/UserRepository.php';
 require_once __DIR__ . '/../repository/OfferRepository.php';
 
 class OfferController extends AppController
 {
     private $message = [];
     private $offerRepository;
+    private $userRepository;
 
     public function __construct()
     {
         parent::__construct();
+        $this->userRepository = new UserRepository();
         $this->offerRepository = new OfferRepository();
     }
 
@@ -23,6 +27,14 @@ class OfferController extends AppController
         {
             header('Location: login');
             exit();
+        }
+
+        $user = $this->userRepository->getUser($_SESSION['user_email']);
+
+        if ($user == null || $user->isLecturer())
+        {
+            $this->message[] = 'YOU DO NOT HAVE PERMISSION TO ADD OFERTS.';
+            return $this->render('offers', ['messages' => $this->message]);
         }
 
         if ($this->isPost())

@@ -5,6 +5,8 @@ require_once __DIR__ . '/../models/User.php';
 
 class UserRepository extends Repository
 {
+    private $lecturer;
+
     public function getUser(string $email): ?User
     {
         $stmt = $this->database->connect()->prepare
@@ -29,7 +31,9 @@ class UserRepository extends Repository
             $user['password'],
             $user['name'],
             $user['surname'],
-            $user['phone']
+            $user['phone'],
+            $user['balance'],
+            $user['lecturer']
         );
     }
 

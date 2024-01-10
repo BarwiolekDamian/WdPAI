@@ -28,6 +28,7 @@
         <div class="row">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             
+            <?php if (isset($offers) && is_array($offers) && count($offers) > 0): ?>
             <?php foreach ($offers as $offer) : ?>
                 <div class="col-sm-12 col-md-6 col-lg-4">
                     <div class="card tutor-card">
@@ -46,6 +47,9 @@
                     </div>
                 </div>
             <?php endforeach; ?>
+            <?php else: ?>
+                <h2>You do not have permission to add offers.</h2>
+            <?php endif; ?>
         </div>
     </div>
 
