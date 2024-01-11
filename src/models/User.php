@@ -9,6 +9,7 @@ class User
     private $phone;
     private $balance;
     private $lecturer;
+    private $id;
 
     public function __construct
     (
@@ -16,14 +17,20 @@ class User
         string $password,
         string $name,
         string $surname,
-        bool $lecturer = false
+        string $phone,
+        int $balance,
+        bool $lecturer,
+        int $id = null
     )
     {
         $this->email = $email;
         $this->password = $password;
         $this->name = $name;
         $this->surname = $surname;
+        $this->phone = $phone;
+        $this->balance = $balance;
         $this->lecturer = $lecturer;
+        $this->id = $id;
     }
 
     public function getEmail(): string
@@ -31,7 +38,7 @@ class User
         return $this->email;
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
@@ -94,6 +101,21 @@ class User
     public function setLecturer(bool $lecturer)
     {
         $this->lecturer = $lecturer;
+    }
+
+    public function getLecturer(): string
+    {
+        if ($this->lecturer)
+        {
+            return 'Yes';
+        }
+
+        return 'No';
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
     }
 }
 

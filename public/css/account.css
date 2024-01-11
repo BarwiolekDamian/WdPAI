@@ -1,0 +1,70 @@
+body {
+  height: auto;
+  background-image: url("/public/images/background.jpg");
+  font-family: sans-serif;
+  margin-top: 80px;
+  padding: 30px;
+}
+
+.container {
+  width: 80%;
+  margin: 2rem auto;
+}
+
+.offer-card {
+  background-color: #e9ecef;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+}
+
+.card-text {
+  margin: 5px 0;
+}
+
+/* Form Styles */
+.edit-form {
+  background-color: #e2e2e2;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.edit-form label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.edit-form input[type="submit"] {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-form input[type="submit"]:hover {
+  background-color: #218838;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+  }
+
+  header img {
+    width: 50px;
+  }
+
+  nav ul li {
+    display: block;
+    margin-bottom: 10px;
+  }
+}

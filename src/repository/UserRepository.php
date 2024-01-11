@@ -5,8 +5,6 @@ require_once __DIR__ . '/../models/User.php';
 
 class UserRepository extends Repository
 {
-    private $lecturer;
-
     public function getUser(string $email): ?User
     {
         $stmt = $this->database->connect()->prepare
@@ -81,6 +79,37 @@ class UserRepository extends Repository
         $data = $stmt->fetch(PDO::FETCH_ASSOC);
         
         return $data['id'];
+    }
+
+    public function updateUser(User $user)
+    {
+        $stmt = $this->database->connect()->prepare
+        ('
+            UPDATE users_details SET 
+                name = :name, 
+                surname = :surname, 
+                phone = :phone
+            WHERE id = :id
+        ');
+
+        $stmt = $this->database->connect()->prepare
+        ('
+            UPDATE users SET 
+                email = :email, 
+                password = :password, 
+                balance = :balance, 
+                lecturer = :lecturer
+            WHERE id_user_details = :id_user_details
+        ');
+
+        $stmt->execute
+        ([
+            ':email' => $user->getEmail(),
+            ':password' => $user->getPassword(),
+            ':balance' => $user->getBalance(),
+            ':lecturer' => $user->isLecturer(),
+            ':id_user_details' => $user->getId()
+        ]);
     }
 }
 

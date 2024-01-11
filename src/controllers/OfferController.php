@@ -31,7 +31,7 @@ class OfferController extends AppController
 
         $user = $this->userRepository->getUser($_SESSION['user_email']);
 
-        if ($user == null || $user->isLecturer())
+        if ($user->isLecturer() !== true)
         {
             $this->message[] = 'YOU DO NOT HAVE PERMISSION TO ADD OFERTS.';
             return $this->render('offers', ['messages' => $this->message]);
