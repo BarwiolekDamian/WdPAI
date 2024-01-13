@@ -29,15 +29,15 @@ class AccountController extends AppController
             $name = $_POST['name'];
             $surname = $_POST['surname'];
             $phone = $_POST['phone'];
-            $email = $_POST['email'];
             $balance = $_POST['balance'];
             $lecturer = $_POST['lecturer'];
-            $user = $this->userRepository->getUser($_SESSION['user_email']);
 
+            $user = $this->userRepository->getUser($_POST['email']);
+            $user->setIdUserDetails($this->userRepository->getUserDetailsId($user));
+            
             $user->setName($name);
             $user->setSurname($surname);
             $user->setPhone($phone);
-            $user->setEmail($email);
             $user->setBalance($balance);
             $user->setLecturer($lecturer);
 

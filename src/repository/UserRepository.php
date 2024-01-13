@@ -64,6 +64,19 @@ class UserRepository extends Repository
         ]);
     }
 
+    public function getUserId(string $email): int
+    {
+        $stmt = $this->database->connect()->prepare
+        ('
+            SELECT * FROM users WHERE email = :email
+        ');
+
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC)['id'];
+    }
+
     public function getUserDetailsId(User $user): int
     {
         $stmt = $this->database->connect()->prepare
@@ -83,33 +96,47 @@ class UserRepository extends Repository
 
     public function updateUser(User $user)
     {
-        $stmt = $this->database->connect()->prepare
-        ('
-            UPDATE users_details SET 
-                name = :name, 
-                surname = :surname, 
-                phone = :phone
-            WHERE id = :id
-        ');
+        $connection = $this->database->connect();
 
-        $stmt = $this->database->connect()->prepare
-        ('
-            UPDATE users SET 
-                email = :email, 
-                password = :password, 
-                balance = :balance, 
-                lecturer = :lecturer
-            WHERE id_user_details = :id_user_details
-        ');
+        try
+        {
+            $connection->beginTransaction();
 
-        $stmt->execute
-        ([
-            ':email' => $user->getEmail(),
-            ':password' => $user->getPassword(),
-            ':balance' => $user->getBalance(),
-            ':lecturer' => $user->isLecturer(),
-            ':id_user_details' => $user->getId()
-        ]);
+            $stmt = $connection->prepare
+            ('
+                UPDATE users_details SET name = :name, surname = :surname, phone = :phone
+                WHERE id = :id
+            ');
+
+            $stmt->bindParam(':name', $user->getName(), PDO::PARAM_STR);
+            $stmt->bindParam(':surname', $user->getSurname(), PDO::PARAM_STR);
+            $stmt->bindParam(':phone', $user->getPhone(), PDO::PARAM_STR);
+            $stmt->bindParam(':id', $user->getIdUserDetails(), PDO::PARAM_INT);
+            $stmt->execute();
+
+            $stmt = $connection->prepare
+            ('
+                UPDATE users SET email = :email, balance = :balance, lecturer = :lecturer
+                WHERE id_user_details = :id_user_details
+            ');
+
+            $stmt->bindParam(':email', $user->getEmail(), PDO::PARAM_STR);
+            $stmt->bindParam(':balance', $user->getBalance());
+            $stmt->bindParam(':lecturer', $user->isLecturer(), PDO::PARAM_BOOL);
+            $stmt->bindParam(':id_user_details', $user->getIdUserDetails(), PDO::PARAM_INT);
+            $stmt->execute();
+
+            $connection->commit();
+        }
+        catch (Exception $e)
+        {
+            if ($connection->inTransaction())
+            {
+                $connection->rollBack();
+            }
+            
+            throw $e;
+        }
     }
 }
 

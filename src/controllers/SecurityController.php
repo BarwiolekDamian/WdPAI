@@ -64,8 +64,7 @@ class SecurityController extends AppController
         }
 
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-        $user = new User($email, $hashedPassword, $name, $surname);
-        $user->setPhone($phone);
+        $user = new User($email, $hashedPassword, $name, $surname, $phone,0, false);
 
         $this->userRepository->addUser($user);
 

@@ -5,6 +5,14 @@ require_once __DIR__ . '/../models/Offer.php';
 
 class OfferRepository extends Repository
 {
+    private $userRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->userRepository = new UserRepository();
+    }
+
     public function getOffer(int $id): ?Offer
     {
         $stmt = $this->database->connect()->prepare
@@ -39,12 +47,10 @@ class OfferRepository extends Repository
     {
         $stmt = $this->database->connect()->prepare
         ('
-            INSERT INTO offers ( native_language, language, description, price, min_level, experience, id_assigned_by )
-            VALUES (?, ?, ?, ?, ?, ?, ?)
+            SELECT add_offer_and_return_id(?, ?, ?, ?, ?, ?, ?)
         ');
 
-        //TODO: Get Value From Logged User Session
-        $assignedById = 4;
+        $assignedById = $this->userRepository->getUserId($_SESSION['user_email']);
 
         $stmt->execute
         ([
@@ -56,6 +62,16 @@ class OfferRepository extends Repository
             $offer->getExperience(),
             $assignedById
         ]);
+
+        $offerId = $stmt->fetch(PDO::FETCH_COLUMN);
+
+        $stmt = $this->database->connect()->prepare
+        ('
+            INSERT INTO users_offers (id_user, id_offer)
+            VALUES (?, ?)
+        ');
+        
+        $stmt->execute([$assignedById, $offerId]);
     }
 
     public function getOffers(): array

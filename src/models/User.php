@@ -1,7 +1,6 @@
 <?php
 
-class User
-{
+class User {
     private $email;
     private $password;
     private $name;
@@ -10,6 +9,7 @@ class User
     private $balance;
     private $lecturer;
     private $id;
+    private $id_user_details;
 
     public function __construct
     (
@@ -19,8 +19,7 @@ class User
         string $surname,
         string $phone,
         int $balance,
-        bool $lecturer,
-        int $id = null
+        bool $lecturer
     )
     {
         $this->email = $email;
@@ -30,7 +29,6 @@ class User
         $this->phone = $phone;
         $this->balance = $balance;
         $this->lecturer = $lecturer;
-        $this->id = $id;
     }
 
     public function getEmail(): string
@@ -82,12 +80,12 @@ class User
     {
         $this->phone = $phone;
     }
-
+    
     public function getBalance(): int
     {
         return $this->balance;
     }
-
+    
     public function setBalance(int $balance)
     {
         $this->balance = $balance;
@@ -100,7 +98,13 @@ class User
 
     public function setLecturer(bool $lecturer)
     {
-        $this->lecturer = $lecturer;
+        if ($lecturer == 'Yes')
+        {
+            $this->lecturer = true;
+            return;
+        }
+
+        $this->lecturer = false;
     }
 
     public function getLecturer(): string
@@ -116,6 +120,21 @@ class User
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
+    }
+
+    public function getIdUserDetails(): int
+    {
+        return $this->id_user_details;
+    }
+
+    public function setIdUserDetails(int $id_user_details)
+    {
+        $this->id_user_details = $id_user_details;
     }
 }
 
