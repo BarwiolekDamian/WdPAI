@@ -14,11 +14,11 @@
         <img src="/public/images/my_logo.png" alt="logo">
         <nav>
             <ul>
-                <li class="nav-link"><a href="addOffer">Add offer</a></li>
-                <li class="nav-link"><a href="offers">Offers</a></li>
-                <li class="nav-link"><a href="contact">Contact</a></li>
-                <li class="nav-link"><a href="account">Account</a></li>
-                <li class="nav-link"><a href="logout">Logout</a></li>
+                <li class="nav-link"><a href="addOffer">ADD OFFER</a></li>
+                <li class="nav-link"><a href="offers">OFFERS</a></li>
+                <li class="nav-link"><a href="contact">CONTACT</a></li>
+                <li class="nav-link"><a href="account">ACCOUNT</a></li>
+                <li class="nav-link"><a href="logout">LOGOUT</a></li>
             </ul>
         </nav>
     </header>

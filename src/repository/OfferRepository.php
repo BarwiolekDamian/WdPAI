@@ -78,7 +78,10 @@ class OfferRepository extends Repository
     {
         $stmt = $this->database->connect()->prepare
         ('
-            SELECT * FROM offers;
+            SELECT o.*, ud.name, ud.surname 
+            FROM offers o
+            JOIN users u ON o.id_assigned_by = u.id
+            JOIN users_details ud ON u.id_user_details = ud.id;
         ');
 
         $result = [];
@@ -97,7 +100,9 @@ class OfferRepository extends Repository
                 $offer['min_level'],
                 $offer['like'],
                 $offer['dislike'],
-                $offer['experience']
+                $offer['experience'],
+                $offer['name'],
+                $offer['surname']
             );
         }
 

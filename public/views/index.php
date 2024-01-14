@@ -15,9 +15,10 @@
         <img src="/public/images/logo.png" alt="logo">
         <nav>
             <ul>
-                <li><a href="offers">Offers</a></li>
-                <li><a href="contact">Contact</a></li>
+                <li><a href="offers">OFFERS</a></li>
+                <li><a href="contact">CONTACT</a></li>
                 <li><a href="index"> SIGN IN</a></li>
+                <li><a href="login"> SIGN IN</a></li>
                 <li><a href="register">REGISTER NOW</a></li>
             </ul>
         </nav>

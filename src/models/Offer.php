@@ -10,6 +10,8 @@ class Offer
     private $like;
     private $dislike;
     private $experience;
+    private $name;
+    private $surname;
 
     public function __construct
     (
@@ -20,7 +22,9 @@ class Offer
         string $min_level,
         string $like,
         string $dislike,
-        string $experience
+        string $experience,
+        string $name,
+        string $surname,
     )
     {
         $this->native_language = $native_language;
@@ -31,6 +35,8 @@ class Offer
         $this->like = $like;
         $this->dislike = $dislike;
         $this->experience = $experience;
+        $this->name = $name;
+        $this->surname = $surname;
     }
 
     public function getNativeLanguage()
@@ -111,6 +117,16 @@ class Offer
     public function setExperience($experience)
     {
         $this->experience = $experience;
+    }
+
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    public function getSurname()
+    {
+        return $this->surname;
     }
 }
 

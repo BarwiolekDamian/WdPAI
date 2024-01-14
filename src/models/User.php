@@ -8,7 +8,6 @@ class User {
     private $phone;
     private $balance;
     private $lecturer;
-    private $id;
     private $id_user_details;
 
     public function __construct
@@ -54,16 +53,6 @@ class User {
     public function getPhone(): string
     {
         return $this->phone;
-    }
-
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
-    }
-
-    public function setPassword(string $password)
-    {
-        $this->password = $password;
     }
 
     public function setName(string $name)
@@ -115,16 +104,6 @@ class User {
         }
 
         return 'No';
-    }
-
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    public function setId(int $id)
-    {
-        $this->id = $id;
     }
 
     public function getIdUserDetails(): int
