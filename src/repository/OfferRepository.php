@@ -17,7 +17,11 @@ class OfferRepository extends Repository
     {
         $stmt = $this->database->connect()->prepare
         ('
-            SELECT * FROM public.offers WHERE id = :id
+            SELECT o.*, ud.name, ud.surname, u.email
+            FROM offers o
+            JOIN users u ON o.id_assigned_by = u.id
+            JOIN users_details ud ON u.id_user_details = ud.id
+            WHERE o.id = :id;
         ');
 
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -32,14 +36,18 @@ class OfferRepository extends Repository
 
         return new Offer
         (
-            $offer['native_language'],
+            $offer['id'],
             $offer['language'],
+            $offer['native_language'],
             $offer['description'],
             $offer['price'],
             $offer['min_level'],
             $offer['like'],
             $offer['dislike'],
-            $offer['experience']
+            $offer['experience'],
+            $offer['name'],
+            $offer['surname'],
+            $offer['email']
         );
     }
 
@@ -78,7 +86,7 @@ class OfferRepository extends Repository
     {
         $stmt = $this->database->connect()->prepare
         ('
-            SELECT o.*, ud.name, ud.surname 
+            SELECT o.*, ud.name, ud.surname, u.email 
             FROM offers o
             JOIN users u ON o.id_assigned_by = u.id
             JOIN users_details ud ON u.id_user_details = ud.id;
@@ -91,10 +99,11 @@ class OfferRepository extends Repository
 
         foreach ($offers as $offer)
         {
-            $result[] = new offer
+            $result[] = new Offer
             (
-                $offer['language'],
+                $offer['id'],
                 $offer['native_language'],
+                $offer['language'],
                 $offer['description'],
                 $offer['price'],
                 $offer['min_level'],
@@ -102,11 +111,44 @@ class OfferRepository extends Repository
                 $offer['dislike'],
                 $offer['experience'],
                 $offer['name'],
-                $offer['surname']
+                $offer['surname'],
+                $offer['email']
             );
         }
 
         return $result;
+    }
+
+    public function buyOffer(Offer $offer): string
+    {
+        $user = $this->userRepository->getUser($_SESSION['user_email']);
+        $actual_balance = $user->getBalance();
+        $price = (int) $offer->getPrice();
+
+        if ($actual_balance < $price)
+        {
+            return "INSUFFICIENT FUNDS FOR PURCHASE.";
+        }
+
+        $stmt = $this->database->connect()->prepare
+        ('
+            UPDATE users SET balance = balance - :price WHERE email = :email
+        ');
+
+        $stmt->bindParam(':price', $price, PDO::PARAM_INT);
+        $stmt->bindParam(':email', $_SESSION['user_email'], PDO::PARAM_STR);
+        $stmt->execute();
+
+        $stmt = $this->database->connect()->prepare
+        ('
+            UPDATE users SET balance = balance + :price WHERE email = :email
+        ');
+
+        $stmt->bindParam(':price', $price, PDO::PARAM_INT);
+        $stmt->bindParam(':email', $offer->getEmail(), PDO::PARAM_STR);
+        $stmt->execute();
+
+        return "PURCHASE COMPLETED SUCCESSFULLY.";
     }
 
     public function getOffersByLanguage(string $searchString)

@@ -41,6 +41,7 @@ class OfferController extends AppController
         {
             $offer = new Offer
             (
+                null,
                 $_POST['native_language'],
                 $_POST['language'],
                 $_POST['description'],
@@ -48,7 +49,10 @@ class OfferController extends AppController
                 $_POST['min_level'],
                 $_POST['like'],
                 $_POST['dislike'],
-                $_POST['experience']
+                $_POST['experience'],
+                $user->getName(),
+                $user->getSurname(),
+                $user->getEmail()
             );
 
             $this->offerRepository->addOffer($offer);
@@ -76,8 +80,16 @@ class OfferController extends AppController
             exit();
         }
 
+        $message = '';
+
+        if ($this->isPost())
+        {
+            $offer = $this->offerRepository->getOffer($_POST['offer_id']);
+            $message = $this->offerRepository->buyOffer($offer);
+        }
+
         $offers = $this->offerRepository->getOffers();
-        $this->render('offers', ['offers' => $offers]);
+        $this->render('offers', ['offers' => $offers, 'message' => $message]);
     }
 
     public function search()

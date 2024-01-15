@@ -12,21 +12,26 @@ class Offer
     private $experience;
     private $name;
     private $surname;
+    private $id;
+    private $email;
 
     public function __construct
     (
-        string $native_language,
-        string $language,
-        string $description,
-        string $price,
-        string $min_level,
-        string $like,
-        string $dislike,
-        string $experience,
-        string $name,
-        string $surname,
+        $id,
+        $native_language,
+        $language,
+        $description,
+        $price,
+        $min_level,
+        $like,
+        $dislike,
+        $experience,
+        $name,
+        $surname,
+        $email
     )
     {
+        $this->id = $id;
         $this->native_language = $native_language;
         $this->language = $language;
         $this->description = $description;
@@ -37,6 +42,7 @@ class Offer
         $this->experience = $experience;
         $this->name = $name;
         $this->surname = $surname;
+        $this->email = $email;
     }
 
     public function getNativeLanguage()
@@ -124,9 +130,24 @@ class Offer
         return $this->name;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
     public function getSurname()
     {
         return $this->surname;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        return $this->email = $email;
     }
 }
 

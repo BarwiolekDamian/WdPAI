@@ -10,6 +10,12 @@
     <script type="text/javascript" src="/public/js/search.js" defer></script>
 </head>
 
+<?php if (!empty($message)): ?>
+    <div class="alert-message">
+        <?php echo htmlspecialchars($message); ?>
+    </div>
+<?php endif; ?>
+
 <body>
 
     <header>
@@ -42,7 +48,11 @@
                             <p class="card-text"><strong>Likes:</strong> <?= $offer->getLike(); ?></p>
                             <p class="card-text"><strong>Dislikes:</strong> <?= $offer->getDislike(); ?></p>
                             <p class="card-text"><strong>Experience:</strong> <?= $offer->getExperience(); ?> years</p>
-                            <button class="btn btn-primary">Buy</button>
+
+                            <form action="offers" method="post">
+                                <input type="hidden" name="offer_id" value="<?= $offer->getId(); ?>">
+                                <button type="submit" class="btn btn-primary">Buy</button>
+                            </form>
                         </div>
                     </div>
                 </div>

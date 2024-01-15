@@ -49,10 +49,10 @@
                     <input type="text" id="email" name="email" value="<?= $user->getEmail(); ?>" readonly><br>
 
                     <label for="phone">Phone:</label>
-                    <input type="text" id="phone" name="phone" value="<?= $user->getPhone(); ?>"><br>
+                    <input type="number" id="phone" name="phone" value="<?= $user->getPhone(); ?>"><br>
 
                     <label for="balance">Balance:</label>
-                    <input type="text" id="balance" name="balance" value="<?= $user->getBalance(); ?>"><br>
+                    <input type="number" id="balance" name="balance" value="<?= $user->getBalance(); ?>"><br>
 
                     <label for="lecturer">Lecturer:</label>
                     <input type="text" id="lecturer" name="lecturer" value="<?= $user->getLecturer(); ?>"><br>
