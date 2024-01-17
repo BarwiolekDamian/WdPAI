@@ -2,11 +2,11 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registration Form</title>
     <link rel="stylesheet" href="/public/css/register.css">
-    <!-- <script type="text/javascript" src="/public/js/script.js" defer></script> -->
+    <!-- <script type="text/javascript" src="./public/js/script.js" defer></script> -->
+    <title>REGISTRATION FORM</title>
 </head>
 
 <body>

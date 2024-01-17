@@ -35,6 +35,7 @@ body {
 }
 
 .edit-form input[type="text"],
+.edit-form input[type="number"],
 .edit-form input[type="submit"] {
   width: 100%;
   padding: 10px;

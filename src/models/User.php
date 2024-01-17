@@ -85,7 +85,7 @@ class User {
         return $this->lecturer;
     }
 
-    public function setLecturer(bool $lecturer)
+    public function setLecturer(string $lecturer)
     {
         if ($lecturer == 'Yes')
         {
