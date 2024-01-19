@@ -8,7 +8,7 @@ class Repository
 
     public function __construct()
     {
-        $this->database = new Database();
+        $this->database = Database::getInstance();
     }
 }
 
