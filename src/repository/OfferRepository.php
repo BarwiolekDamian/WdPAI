@@ -17,7 +17,7 @@ class OfferRepository extends Repository
     {
         $stmt = $this->database->connect()->prepare
         ('
-            SELECT o.*, ud.name, ud.surname, u.email
+            SELECT o.*, ud.name, ud.surname, u.email 
             FROM offers o
             JOIN users u ON o.id_assigned_by = u.id
             JOIN users_details ud ON u.id_user_details = ud.id
@@ -53,37 +53,111 @@ class OfferRepository extends Repository
 
     public function addOffer(Offer $offer): void
     {
-        $stmt = $this->database->connect()->prepare
-        ('
-            SELECT add_offer_and_return_id(?, ?, ?, ?, ?, ?, ?)
-        ');
+        $connection = $this->database->connect();
 
-        $assignedById = $this->userRepository->getUserId($_SESSION['user_email']);
+        try
+        {
+            $connection->beginTransaction();
 
-        $stmt->execute
-        ([
-            $offer->getNativeLanguage(),
-            $offer->getLanguage(),
-            $offer->getDescription(),
-            $offer->getPrice(),
-            $offer->getMinLevel(),
-            $offer->getExperience(),
-            $assignedById
-        ]);
+            $stmt = $connection->prepare
+            ('
+                SELECT add_offer_and_return_id(?, ?, ?, ?, ?, ?, ?)
+            ');
 
-        $offerId = $stmt->fetch(PDO::FETCH_COLUMN);
+            $assignedById = $this->userRepository->getUserId($_SESSION['user_email']);
 
-        $stmt = $this->database->connect()->prepare
-        ('
-            INSERT INTO users_offers (id_user, id_offer)
-            VALUES (?, ?)
-        ');
-        
-        $stmt->execute([$assignedById, $offerId]);
+            $stmt->execute
+            ([
+                $offer->getNativeLanguage(),
+                $offer->getLanguage(),
+                $offer->getDescription(),
+                $offer->getPrice(),
+                $offer->getMinLevel(),
+                $offer->getExperience(),
+                $assignedById
+            ]);
+
+            $offerId = $stmt->fetch(PDO::FETCH_COLUMN);
+
+            $stmt = $connection->prepare
+            ('
+                INSERT INTO users_offers (id_user, id_offer)
+                VALUES (?, ?)
+            ');
+
+            $stmt->execute([$assignedById, $offerId]);
+            $connection->commit();
+        }
+        catch (PDOException $exceptionObj)
+        {
+            if ($connection->inTransaction())
+            {
+                $connection->rollBack();
+            }
+
+            throw $exceptionObj;
+        }
+    }
+
+    public function buyOffer(Offer $offer): string
+    {
+        try
+        {
+            $this->database->connect()->beginTransaction();
+
+            $user = $this->userRepository->getUser($_SESSION['user_email']);
+            $actual_balance = $user->getBalance();
+            $price = (int) $offer->getPrice();
+
+            if ($actual_balance < $price)
+            {
+                if ($this->database->connect()->inTransaction())
+                {
+                    $this->database->connect()->rollBack();
+                }
+
+                return "INSUFFICIENT FUNDS FOR PURCHASE.";
+            }
+
+            $stmt = $this->database->connect()->prepare
+            ('
+                UPDATE users SET balance = balance - :price WHERE email = :email
+            ');
+
+            $stmt->bindParam(':price', $price, PDO::PARAM_INT);
+            $stmt->bindParam(':email', $_SESSION['user_email'], PDO::PARAM_STR);
+            $stmt->execute();
+
+            $stmt = $this->database->connect()->prepare
+            ('
+                UPDATE users SET balance = balance + :price WHERE email = :email
+            ');
+
+            $stmt->bindParam(':price', $price, PDO::PARAM_INT);
+            $stmt->bindParam(':email', $offer->getEmail(), PDO::PARAM_STR);
+            $stmt->execute();
+
+            if ($this->database->connect()->inTransaction())
+            {
+                $this->database->connect()->commit();
+            }
+
+            return "PURCHASE COMPLETED SUCCESSFULLY.";
+        } catch (PDOException $exceptionObj)
+        {
+            if ($this->database->connect()->inTransaction())
+            {
+                $this->database->connect()->rollBack();
+            }
+
+            throw $exceptionObj;
+        }
     }
 
     public function getOffers(): array
     {
+        $result = [];
+
         $stmt = $this->database->connect()->prepare
         ('
             SELECT o.*, ud.name, ud.surname, u.email 
@@ -92,9 +166,7 @@ class OfferRepository extends Repository
             JOIN users_details ud ON u.id_user_details = ud.id;
         ');
 
-        $result = [];
         $stmt->execute();
-        
         $offers = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($offers as $offer)
@@ -119,47 +191,15 @@ class OfferRepository extends Repository
         return $result;
     }
 
-    public function buyOffer(Offer $offer): string
-    {
-        $user = $this->userRepository->getUser($_SESSION['user_email']);
-        $actual_balance = $user->getBalance();
-        $price = (int) $offer->getPrice();
-
-        if ($actual_balance < $price)
-        {
-            return "INSUFFICIENT FUNDS FOR PURCHASE.";
-        }
-
-        $stmt = $this->database->connect()->prepare
-        ('
-            UPDATE users SET balance = balance - :price WHERE email = :email
-        ');
-
-        $stmt->bindParam(':price', $price, PDO::PARAM_INT);
-        $stmt->bindParam(':email', $_SESSION['user_email'], PDO::PARAM_STR);
-        $stmt->execute();
-
-        $stmt = $this->database->connect()->prepare
-        ('
-            UPDATE users SET balance = balance + :price WHERE email = :email
-        ');
-
-        $stmt->bindParam(':price', $price, PDO::PARAM_INT);
-        $stmt->bindParam(':email', $offer->getEmail(), PDO::PARAM_STR);
-        $stmt->execute();
-
-        return "PURCHASE COMPLETED SUCCESSFULLY.";
-    }
-
     public function getOffersByLanguage(string $searchString)
     {
-        $searchString = '%'.strtolower($searchString).'%';
+        $searchString = '%' . strtolower($searchString) . '%';
 
         $stmt = $this->database->connect()->prepare
         ('
             SELECT * FROM offers WHERE LOWER(language) LIKE :search
         ');
-        
+
         $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);
         $stmt->execute();
 

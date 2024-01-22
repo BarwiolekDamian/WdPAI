@@ -11,12 +11,11 @@
 <body>
 
     <header>
-        <img src="/public/images/my_logo.png" alt="logo">
+        <img src="/public/images/logo.png" alt="logo">
         <nav>
             <ul>
                 <li class="nav-link"><a href="addOffer">ADD OFFER</a></li>
                 <li class="nav-link"><a href="offers">OFFERS</a></li>
-                <li class="nav-link"><a href="contact">CONTACT</a></li>
                 <li class="nav-link"><a href="account">ACCOUNT</a></li>
                 <li class="nav-link"><a href="logout">LOGOUT</a></li>
             </ul>
@@ -24,7 +23,7 @@
     </header>
 
     <div class="container">
-        <h2 class="mt-5">YOUR ACCOUNT</h2>
+        <h2 class="mt-5">YOUR ACCOUNT:</h2>
 
         <?php if ($user !== null) : ?>
             <div class="offer-card">
@@ -35,9 +34,10 @@
                 <p class="card-text"><strong>Balance:</strong> <?= $user->getBalance(); ?></p>
                 <p class="card-text"><strong>Lecturer:</strong> <?= $user->getLecturer(); ?></p>
             </div>
-            
+
             <div class="edit-form">
                 <h3>Edit Account Information</h3>
+
                 <form action="account" method="post">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" value="<?= $user->getName(); ?>"><br>
@@ -61,7 +61,7 @@
                 </form>
             </div>
         <?php else : ?>
-            <p>NO DATA FOUND</p>
+            <p>No data found</p>
         <?php endif; ?>
     </div>
 

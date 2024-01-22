@@ -22,7 +22,7 @@
         <p>Our community of language experts is eager to share their knowledge and cultural insights, providing you with authentic conversational practice that goes beyond the textbooks. Join us at DialectDo, where language learning comes to life.</p>
         <p>Embark on your linguistic adventure with DialectDo today!</p>
         <p>Have any questions about how we can aid your language learning journey? Our friendly support team is just a click away. Contact us now and let's talk language!</p>
-        
+
         <div class="buttons">
             <a href="register" class="button register">REGISTER NOW</a>
             <a href="login" class="button sign-in">SIGN IN</a>

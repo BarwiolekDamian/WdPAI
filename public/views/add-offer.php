@@ -12,9 +12,9 @@
 <body>
 
     <header>
-        <img src="/public/images/my_logo.png" alt="logo">
+        <img src="/public/images/logo.png" alt="logo">
         <nav>
-        <ul>
+            <ul>
                 <li class="nav-link"><a href="addOffer">ADD OFFER</a></li>
                 <li class="nav-link"><a href="offers">OFFERS</a></li>
                 <li class="nav-link"><a href="account">ACCOUNT</a></li>
@@ -25,7 +25,7 @@
 
     <div class="container">
         <h2 class="mt-5">ADD YOUR OFFER</h2>
-        
+
         <form action="addOffer" method="POST">
             <div class="form-group">
                 <label for="nativeLanguage">Native Language</label>
@@ -51,6 +51,7 @@
                 <label for="experience">Experience [years]</label>
                 <input type="number" class="form-control" id="experience" name="experience" required>
             </div>
+
             <button type="submit" class="custom-btn">Add</button>
         </form>
     </div>

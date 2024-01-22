@@ -78,7 +78,6 @@ input[type="password"] {
   outline: none;
 }
 
-/* Responsive Adjustments */
 @media (max-width: 600px) {
   .form-box {
     margin: 10px;

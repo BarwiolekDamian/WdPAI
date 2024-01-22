@@ -8,11 +8,6 @@ class DefaultController extends AppController
     {
         $this->render('index');
     }
-
-    public function error()
-    {
-        $this->render('errors');
-    }
 }
 
 ?>

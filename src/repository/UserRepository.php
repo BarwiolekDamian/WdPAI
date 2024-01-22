@@ -37,31 +37,45 @@ class UserRepository extends Repository
 
     public function addUser(User $user)
     {
-        $stmt = $this->database->connect()->prepare
-        ('
-            INSERT INTO users_details ( name, surname, phone )
-            VALUES (?, ?, ?)
-        ');
+        $connection = $this->database->connect();
+        
+        try
+        {
+            $connection->beginTransaction();
 
-        $stmt->execute
-        ([
-            $user->getName(),
-            $user->getSurname(),
-            $user->getPhone(),
-        ]);
+            $stmt = $connection->prepare
+            ('
+                INSERT INTO users_details (name, surname, phone)
+                VALUES (?, ?, ?)
+            ');
 
-        $stmt = $this->database->connect()->prepare
-        ('
-            INSERT INTO users ( email, password, id_user_details )
-            VALUES (?, ?, ?)
-        ');
+            $stmt->execute
+            ([
+                $user->getName(),
+                $user->getSurname(),
+                $user->getPhone(),
+            ]);
 
-        $stmt->execute
-        ([
-            $user->getEmail(),
-            $user->getPassword(),
-            $this->getUserDetailsId($user)
-        ]);
+            $userDetailsId = $connection->lastInsertId();
+
+            $stmt = $connection->prepare
+            ('
+                INSERT INTO users (email, password, id_user_details)
+                VALUES (?, ?, ?)
+            ');
+
+            $stmt->execute
+            ([
+                $user->getEmail(),
+                $user->getPassword(),
+                $userDetailsId
+            ]);
+
+            $connection->commit();
+        } catch (Exception $exceptionObj) {
+            $connection->rollBack();
+            throw $exceptionObj;
+        }
     }
 
     public function getUserId(string $email): int
@@ -128,14 +142,14 @@ class UserRepository extends Repository
 
             $connection->commit();
         }
-        catch (Exception $e)
+        catch (Exception $exceptionObj)
         {
             if ($connection->inTransaction())
             {
                 $connection->rollBack();
             }
             
-            throw $e;
+            throw $exceptionObj;
         }
     }
 }

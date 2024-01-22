@@ -51,9 +51,9 @@ class Database
             // Return Connection Handler
             return $dbConnection;
         }
-        catch (PDOException $e)
+        catch (PDOException $exceptionObj)
         {
-            die("Connection Failed: " . $e->getMessage());
+            die("CONNECTION FAILED: " . $exceptionObj->getMessage());
         }
     }
 }
