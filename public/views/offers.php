@@ -8,21 +8,12 @@
     <link rel="stylesheet" href="/public/css/nav-bar.css">
     <link rel="stylesheet" href="/public/css/offers.css">
     <script type="text/javascript" src="/public/js/search.js" defer></script>
+    <link rel="shortcut icon" type="image/png" href="./public/images/logo.png">
 </head>
 
 <body>
 
-    <header>
-        <img src="/public/images/logo.png" alt="logo">
-        <nav>
-            <ul>
-                <li class="nav-link"><a href="addOffer">ADD OFFER</a></li>
-                <li class="nav-link"><a href="offers">OFFERS</a></li>
-                <li class="nav-link"><a href="account">ACCOUNT</a></li>
-                <li class="nav-link"><a href="logout">LOGOUT</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include 'nav.php'; ?>
 
     <?php if (!empty($message)) : ?>
         <div class="alert-message">
@@ -33,8 +24,10 @@
     <div class="background-container">
         <div class="container mt-4">
             <div class="row">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-
+                <input class="form-control mr-sm-2" type="search" placeholder="Search Language" aria-label="Search">
+            </div>
+            
+            <div class="row" id="offers-container">
                 <?php if (isset($offers) && is_array($offers) && count($offers) > 0) : ?>
                 <?php foreach ($offers as $offer) : ?>
                     <div class="col-sm-12 col-md-6 col-lg-4">
@@ -72,16 +65,16 @@
     <div class="col-sm-12 col-md-6 col-lg-4">
         <div class="card tutor-card">
             <div class="card-body">
-                <h5 class="card-title">Tutoring Offer</h5>
+                <p class="card-title"><span class="name"></p>
 
                 <p class="card-text"><strong>Native Language:</strong> <span class="native_language"></span></p>
                 <p class="card-text"><strong>Language:</strong> <span class="language"></span></p>
                 <p class="card-text"><strong>Description:</strong> <span class="description"></span></p>
-                <p class="card-text"><strong>Price:</strong> <span class="price"></span> $/h</p>
+                <p class="card-text"><strong>Price:</strong> <span class="price"></span></p>
                 <p class="card-text"><strong>Minimum Level:</strong> <span class="min_level"></span></p>
                 <p class="card-text"><strong>Likes:</strong> <span class="like"></span></p>
                 <p class="card-text"><strong>Dislikes:</strong> <span class="dislike"></span></p>
-                <p class="card-text"><strong>Experience:</strong> <span class="experience"></span> years</p>
+                <p class="card-text"><strong>Experience:</strong> <span class="experience"></span></p>
                 <button class="btn btn-primary">Buy</button>
             </div>
         </div>

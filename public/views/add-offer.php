@@ -7,21 +7,12 @@
     <title>Add Offer</title>
     <link rel="stylesheet" href="/public/css/add-offer.css">
     <link rel="stylesheet" href="/public/css/nav-bar.css">
+    <link rel="shortcut icon" type="image/png" href="./public/images/logo.png">
 </head>
 
 <body>
 
-    <header>
-        <img src="/public/images/logo.png" alt="logo">
-        <nav>
-            <ul>
-                <li class="nav-link"><a href="addOffer">ADD OFFER</a></li>
-                <li class="nav-link"><a href="offers">OFFERS</a></li>
-                <li class="nav-link"><a href="account">ACCOUNT</a></li>
-                <li class="nav-link"><a href="logout">LOGOUT</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include 'nav.php'; ?>
 
     <div class="container">
         <h2 class="mt-5">ADD YOUR OFFER</h2>
@@ -41,7 +32,7 @@
             </div>
             <div class="form-group">
                 <label for="price">Price [$/h]</label>
-                <input type="number" class="form-control" id="price" name="price" required>
+                <input type="number" class="form-control" id="price" name="price" required min="0">
             </div>
             <div class="form-group">
                 <label for="minimumLevel">Minimum language level</label>
@@ -49,7 +40,7 @@
             </div>
             <div class="form-group">
                 <label for="experience">Experience [years]</label>
-                <input type="number" class="form-control" id="experience" name="experience" required>
+                <input type="number" class="form-control" id="experience" name="experience" required min="0">
             </div>
 
             <button type="submit" class="custom-btn">Add</button>

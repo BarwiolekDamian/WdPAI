@@ -1,5 +1,5 @@
 # Install 'PHP' Server & Declare Variables
-FROM php:8.2.11-fpm-alpine3.18
+FROM php:7.4.3-fpm-alpine3.11
 
 ENV RUN_DEPS \
     zlib \

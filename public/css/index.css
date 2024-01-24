@@ -1,99 +1,77 @@
-body,
-html {
+body, html {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
-  background: #fff;
+  font-family: 'Open Sans', sans-serif;
+  background: #f4f4f4;
+  color: #333;
 }
 
-.nav-bar {
-  background-color: #f8f8f8;
-  padding: 10px;
-  text-align: right;
+h1 {
+  font-size: 2.5em;
+  color: #4CAF50;
+  margin-top: 50px;
+  margin-bottom: 30px;
 }
 
-.nav-link {
-  margin-left: 20px;
-  color: #000;
-  text-decoration: none;
-  font-weight: bold;
+p {
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.main-icon {
+  width: 300px;
+  height: auto;
 }
 
 .main-content {
   text-align: center;
-  padding: 50px 20px;
+  padding: 40px 20px;
 }
 
-.icon-holder {
-  display: inline-block;
-  margin-bottom: 20px;
+.buttons {
+  margin-top: 55px;
 }
 
-.main-icon {
-  width: 100px;
-}
-
-h1 {
-  font-size: 2em;
-  color: #333;
-  margin-top: 50px;
-  margin-bottom: 20px;
-}
-
-p {
-  color: #666;
-  margin-bottom: 30px;
+.content {
+  margin: auto;
+  width: 45vw;
+  text-align: justify;
 }
 
 .buttons .button {
-  padding: 10px 20px;
-  margin: 10px;
+  padding: 15px 30px;
+  margin: 30px;
   border-radius: 5px;
   text-decoration: none;
   color: white;
   font-weight: bold;
+  transition: background-color 0.3s;
 }
 
 .register {
-  background-color: #4caf50;
+  background-color: #4CAF50;
+}
+
+.register:hover {
+  background-color: #45a049;
 }
 
 .sign-in {
-  background-color: #008cba;
+  background-color: #008CBA;
 }
 
-.footer {
-  background-color: #f8f8f8;
-  padding: 20px;
-  text-align: center;
+.sign-in:hover {
+  background-color: #007ba7;
 }
 
-.footer h2 {
-  font-size: 1.5em;
-  color: #333;
-}
-
-.contact {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #008cba;
-  color: white;
-  border-radius: 5px;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-/* Responsive Adjustments */
 @media (max-width: 600px) {
-  .main-content,
-  .footer {
-    padding: 20px;
+  h1 {
+      font-size: 2em;
   }
 
-  .buttons .button,
-  .contact {
-    width: 100%;
-    box-sizing: border-box;
+  .buttons .button {
+      width: 100%;
+      box-sizing: border-box;
   }
 }

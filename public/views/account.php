@@ -6,21 +6,12 @@
     <title>Account</title>
     <link rel="stylesheet" href="/public/css/nav-bar.css">
     <link rel="stylesheet" href="/public/css/account.css">
+    <link rel="shortcut icon" type="image/png" href="./public/images/logo.png">
 </head>
 
 <body>
 
-    <header>
-        <img src="/public/images/logo.png" alt="logo">
-        <nav>
-            <ul>
-                <li class="nav-link"><a href="addOffer">ADD OFFER</a></li>
-                <li class="nav-link"><a href="offers">OFFERS</a></li>
-                <li class="nav-link"><a href="account">ACCOUNT</a></li>
-                <li class="nav-link"><a href="logout">LOGOUT</a></li>
-            </ul>
-        </nav>
-    </header>
+    <?php include 'nav.php'; ?>
 
     <div class="container">
         <h2 class="mt-5">YOUR ACCOUNT:</h2>
@@ -31,7 +22,7 @@
                 <p class="card-text"><strong>Surname:</strong> <?= $user->getSurname(); ?></p>
                 <p class="card-text"><strong>Phone:</strong> <?= $user->getPhone(); ?></p>
                 <p class="card-text"><strong>Email:</strong> <?= $user->getEmail(); ?></p>
-                <p class="card-text"><strong>Balance:</strong> <?= $user->getBalance(); ?></p>
+                <p class="card-text"><strong>Balance:</strong> <?= $user->getBalance(); ?> $</p>
                 <p class="card-text"><strong>Lecturer:</strong> <?= $user->getLecturer(); ?></p>
             </div>
 
@@ -49,13 +40,16 @@
                     <input type="text" id="email" name="email" value="<?= $user->getEmail(); ?>" readonly><br>
 
                     <label for="phone">Phone:</label>
-                    <input type="number" id="phone" name="phone" value="<?= $user->getPhone(); ?>"><br>
+                    <input type="number" id="phone" name="phone" min="0" value="<?= $user->getPhone(); ?>"><br>
 
-                    <label for="balance">Balance:</label>
-                    <input type="number" id="balance" name="balance" value="<?= $user->getBalance(); ?>"><br>
+                    <label for="balance">Balance [$]:</label>
+                    <input type="number" id="balance" name="balance" value="<?= $user->getBalance(); ?>" min="0"><br>
 
                     <label for="lecturer">Lecturer:</label>
-                    <input type="text" id="lecturer" name="lecturer" value="<?= $user->getLecturer(); ?>"><br>
+                    <select id="lecturer" name="lecturer">
+                        <option value="Yes" <?= $user->getLecturer() == 'Yes' ? 'selected' : ''; ?>>Yes</option>
+                        <option value="No" <?= $user->getLecturer() == 'No' ? 'selected' : ''; ?>>No</option>
+                    </select><br>
 
                     <input type="submit" value="Save">
                 </form>

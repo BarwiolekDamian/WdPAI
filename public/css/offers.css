@@ -1,7 +1,5 @@
 body {
   height: 125vh;
-  background-image: url("/public/images/background.jpg");
-  background-repeat: repeat;
   font-family: sans-serif;
   margin-top: 80px;
   padding: 30px;

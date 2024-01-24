@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/public/css/register.css">
     <title>DialectDo - Registration Page</title>
+    <link rel="shortcut icon" type="image/png" href="./public/images/logo.png">
 </head>
 
 <body>
 
     <div class="form-container">
         <div class="form-box">
-            <h2 class="form-title">Register</h2>
+            <h2 class="form-title">REGISTER</h2>
 
             <form id="registration-form" action="register" method="POST">
                 <div class="messages">
@@ -34,7 +35,7 @@
                     <input type="text" id="surname" name="surname" placeholder="Surname" required>
                 </div>
                 <div class="form-group">
-                    <input type="text" id="phone" name="phone" placeholder="Phone" required>
+                    <input type="number" min="0" id="phone" name="phone" placeholder="Phone" required>
                 </div>
                 <div class="form-group">
                     <input type="email" id="email" name="email" placeholder="Email" required>

@@ -58,6 +58,10 @@ class SecurityController extends AppController
         $surname = $_POST['surname'];
         $phone = $_POST['phone'];
 
+        if ($this->userRepository->getUser($email)) {
+            return $this->render('register', ['messages' => ['User With This Email Already Exists!']]);
+        }
+
         if ($password !== $confirmedPassword)
         {
             return $this->render('register', ['messages' => ['Passwords Are Not The Same!']]);

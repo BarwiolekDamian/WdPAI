@@ -36,6 +36,7 @@ html {
 
 input[type="text"],
 input[type="email"],
+input[type="number"],
 input[type="password"] {
   width: calc(100% - 20px);
   padding: 10px;

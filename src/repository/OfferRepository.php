@@ -197,7 +197,12 @@ class OfferRepository extends Repository
 
         $stmt = $this->database->connect()->prepare
         ('
-            SELECT * FROM offers WHERE LOWER(language) LIKE :search
+            SELECT o.*, ud.name, ud.surname
+            FROM offers o
+            JOIN users_offers uo ON o.id = uo.id_offer
+            JOIN users u ON uo.id_user = u.id
+            JOIN users_details ud ON u.id_user_details = ud.id
+            WHERE LOWER(o.language) LIKE :search;
         ');
 
         $stmt->bindParam(':search', $searchString, PDO::PARAM_STR);

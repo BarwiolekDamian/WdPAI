@@ -1,5 +1,5 @@
-const search = document.querySelector('input[placeholder="Search"]');
-const rowContainer = document.querySelector(".container.mt-4 > .row");
+const search = document.querySelector('input[placeholder="Search Language"]');
+const rowContainer = document.querySelector("#offers-container");
 
 search.addEventListener("keyup", function (event)
 {
@@ -40,6 +40,7 @@ function createOffer(offer) {
     const template = document.querySelector("#project-template");
     const clone = template.content.cloneNode(true);
 
+    clone.querySelector(".name").textContent = `${offer.name} ${offer.surname}`;
     clone.querySelector(".native_language").textContent = offer.native_language;
     clone.querySelector(".language").textContent = offer.language;
     clone.querySelector(".description").textContent = offer.description;

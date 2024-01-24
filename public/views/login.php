@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DialectDo - Login Page</title>
     <link rel="stylesheet" href="/public/css/login.css">
+    <link rel="shortcut icon" type="image/png" href="./public/images/logo.png">
 </head>
 
 <body>
 
     <div class="form-container">
         <div class="form-box">
-            <h2 class="form-title">Login</h2>
+            <h2 class="form-title">LOGIN</h2>
 
             <form id="login-form" action="login" method="POST">
                 <div class="messages">

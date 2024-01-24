@@ -55,6 +55,24 @@ body {
   background-color: #218838;
 }
 
+.edit-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-family: sans-serif;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.edit-form select:focus {
+  outline: none;
+  border-color: #28a745;
+  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}
+
 @media (max-width: 768px) {
   .container {
     width: 95%;
